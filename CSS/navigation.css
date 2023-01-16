@@ -1,0 +1,37 @@
+.navigation--icons {
+  height: inherit;
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navigation--info {
+  height: inherit;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  height: 3.5rem;
+  width: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* HEADER SVG ICONS */
+.svg-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: var(--color-light--4);
+}
+
+.svg-icon circle {
+  stroke: var(--color-light--4);
+  stroke-width: 1;
+}

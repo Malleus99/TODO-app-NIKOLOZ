@@ -1,0 +1,91 @@
+:root {
+  --color-light--1: #aaa;
+  --color-light--2: #f8f6f6;
+  --color-light--3: #d6dee0;
+  --color-light--4: #fff;
+
+  --color-text--1: rgb(51, 51, 233);
+  --color-text--2: rgb(32, 32, 54);
+
+  --color-hover--1: rgba(149, 149, 201, 0.5); /* On main body*/
+  --color-hover--2: rgba(0, 0, 255, 0.1); /* On white body*/
+
+  --color-svg--1: #4691f6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  height: 100vh;
+  overscroll-behavior-y: none;
+  background-color: var(--color-light--2);
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.TODO-app-motherbox {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 102, 204, 1) 0%,
+    rgba(0, 0, 153, 1) 100%
+  );
+  border-radius: 1rem;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.35);
+  width: 80rem;
+  height: 50rem;
+  display: flex;
+}
+.left-side-header {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-light--4);
+  font-size: 1.5rem;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  margin-left: 0.8rem;
+}
+
+.header-top-element {
+  height: 5rem;
+  display: flex;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  transition: all 0.3s;
+  border-radius: 3rem;
+  cursor: pointer;
+}
+.header-top-element:hover {
+  background-color: var(--color-hover--1);
+}
+.right-side-container {
+  height: inherit;
+  width: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text--1);
+  font-size: 1.5rem;
+}
+.right-side-infobox {
+  height: 85%;
+  width: 85%;
+  background-color: var(--color-light--2);
+  border-radius: 3rem;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,113 @@
+/* Add TODO styles*/
+.addtodo-container {
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px dotted;
+}
+.addtodo-form {
+  width: 80%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: rgb(39, 49, 141);
+  border-width: 10px;
+  border-radius: 3rem;
+  transition: all 0.5s;
+}
+.addtodo-form:hover {
+  background-color: var(--color-hover--2);
+}
+.addtodo-container-elements {
+  background-color: transparent;
+  border: none;
+  height: 3rem;
+}
+
+.todolist-input {
+  width: 70%;
+}
+.todolist-input:focus {
+  outline-width: 0;
+}
+
+.todolist-submit {
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+/*TODO styles*/
+.todo-list-container {
+  height: inherit;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.todo-instance {
+  height: 5rem;
+  padding: 0px 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.8rem;
+  color: var(--color-text--2);
+  background-color: var(--color-light--4);
+  border-radius: 4rem;
+  margin-bottom: 0.3rem;
+}
+.todo-description {
+  flex-grow: 1;
+  height: inherit;
+  display: flex;
+  align-items: center;
+}
+.todo-important-mark {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.todo-important-mark:hover {
+  background-color: var(--color-hover--2);
+}
+/* SVG STYLES for InfoBox*/
+.svg-icon-infobox {
+  width: 3rem;
+  height: 3rem;
+}
+
+.svg-icon-infobox path,
+.svg-icon-infobox polygon,
+.svg-icon-infobox rect {
+  fill: var(--color-svg--1);
+}
+
+.svg-icon-infobox circle {
+  stroke: var(--color-svg--1);
+  stroke-width: 1;
+}
+
+.svg-icon-favorite {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.svg-icon-favorite path,
+.svg-icon-favorite polygon,
+.svg-icon-favorite rect {
+  fill: var(--color-svg--1);
+}
+
+.svg-icon-favorite circle {
+  stroke: var(--color-svg--1);
+  stroke-width: 1;
+}
