@@ -11,6 +11,8 @@
   --color-hover--2: rgba(0, 0, 255, 0.1); /* On white body*/
 
   --color-svg--1: #4691f6;
+
+  --color-removal--1: rgba(248, 74, 74, 0.4);
 }
 
 * {
@@ -25,7 +27,7 @@ html {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   line-height: 1.6;
   height: 100vh;

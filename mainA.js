@@ -2,11 +2,9 @@
 import { SVG_PATH_FAV_NO, SVG_PATH_FAV_YES } from './supplementary.js';
 /*QUERY SELECTORS */
 // TODOS
-const todoInput = document.querySelector('.todolist-input');
-const todoSubmit = document.querySelector('.todolist-submit');
 const todoContainer = document.getElementById('todo-container');
 const addTodoContainer = document.querySelector('.addtodo-container');
-
+const form = document.querySelector('.addtodo-form');
 // NAVIGATION
 const todoListBtn = document.querySelector('.TODO-list');
 const importantBtn = document.querySelector('.important-TODO-list');
@@ -14,15 +12,9 @@ const importantBtn = document.querySelector('.important-TODO-list');
 
 let profileTodo = {
   username: 'Cooper Anderson',
-  todoList: [
-    {
-      todo: 'Fold laundry',
-      important: false,
-    },
-  ],
+  todoList: [],
 };
 let currentNavigationSpace;
-
 const updateLocalStorage = function () {
   localStorage.setItem('profileTodo', JSON.stringify(profileTodo));
 };
@@ -34,10 +26,6 @@ const renderTodo = function () {
     inst => `
   <div class="todo-instance">
     <div class="todo-description">${inst.todo}</div>
-      <div class="btn-todo-initiation hidden">
-        <button class="btn-delete btn-selector">✔</button>
-        <button class="btn-disregard btn-selector">✖</button>
-      </div>
       <div class="todo-important-mark">
         <svg class="svg-icon-favorite" viewBox="0 0 20 20">
           ${inst.important ? SVG_PATH_FAV_YES : SVG_PATH_FAV_NO}
@@ -48,26 +36,33 @@ const renderTodo = function () {
   const finalTodos = todos.join('');
   todoContainer.innerHTML = finalTodos;
   currentNavigationSpace = 'TODO-list';
+  const querySelector = document.querySelectorAll('.todo-important-mark');
+  querySelector.forEach(el =>
+    el.addEventListener('click', () => {
+      // reverse todo
+    })
+  );
+  console.log('querySelector', querySelector);
   updateLocalStorage();
 };
 
 const renderFavorite = function () {
+  todoContainer.innerHTML = '';
   addTodoContainer.classList.add('hidden');
   let favorites = [];
-  profileTodo.todoList.map(el => {
-    if (el.important) favorites.push(el);
-  });
+  const favoritesFilter = function () {
+    profileTodo.todoList.map(el => {
+      if (el.important) favorites.push(el);
+    });
+  };
+  favoritesFilter();
 
   const reverse = favorites.slice(0).reverse();
   const todos = reverse.map(
     inst => `
   <div class="todo-instance">
     <div class="todo-description">${inst.todo}</div>
-      <div class="btn-todo-initiation hidden">
-          <button class="btn-delete btn-selector">✔</button>
-          <button class="btn-disregard btn-selector">✖</button>
-        </div>
-      <div class="todo-important-mark">
+      <div class="todo-important-mark" data-id=${inst.todo}>
         <svg class="svg-icon-favorite" viewBox="0 0 20 20">
         ${inst.important ? SVG_PATH_FAV_YES : SVG_PATH_FAV_NO}
         </svg>
@@ -75,7 +70,7 @@ const renderFavorite = function () {
   </div>`
   );
   const finalTodos = todos.join('');
-  todoContainer.innerHTML = finalTodos;
+  todoContainer.insertAdjacentHTML('afterbegin', finalTodos);
   currentNavigationSpace = 'Important';
   updateLocalStorage();
 };
@@ -94,6 +89,7 @@ const spaceFinder = function () {
 };
 
 const createNewTodo = function (e) {
+  const todoInput = e.target[0];
   e.preventDefault();
   if (todoInput.value.length < 3) {
     window.alert('TODO too short, TODO needs to be at least 3 letters long.');
@@ -124,50 +120,24 @@ const markFavorite = function (e) {
   }
 };
 
-const resetTodoPanel = function () {
-  const allTodoInstances = document.querySelectorAll('.todo-instance');
-  allTodoInstances.forEach(el => el.classList.remove('removal-effect'));
-  const allBtnsActive = document.querySelectorAll('.btn-todo-initiation');
-  allBtnsActive.forEach(el => el.classList.add('hidden'));
-};
-
 const removeTodo = function (e) {
-  const finder = e.target;
-  const index = profileTodo.todoList.findIndex(el => el.todo === finder);
-  profileTodo.todoList.splice(index, 1);
-  spaceFinder();
-};
-
-const initiateRemoval = function (e) {
-  resetTodoPanel();
   if (e.target.classList.contains('todo-description')) {
-    const parentEl = e.target.closest('.todo-instance');
-    parentEl.classList.add('removal-effect');
-
-    const btnsContainer = parentEl.querySelector('.btn-todo-initiation');
-    btnsContainer.classList.remove('hidden');
-
-    const btnDelete = btnsContainer.querySelector('.btn-delete');
-    const btnDisregard = btnsContainer.querySelector('.btn-disregard');
-
-    btnDelete.addEventListener('click', removeTodo);
-
-    btnDisregard.addEventListener('click', function () {
-      parentEl.classList.remove('removal-effect');
-      btnsContainer.classList.add('hidden');
-    });
+    const finder = e.target.innerHTML;
+    const index = profileTodo.todoList.findIndex(el => el.todo === finder);
+    profileTodo.todoList.splice(index, 1);
+    spaceFinder();
   }
 };
 
 /* EVENT LISTENERS */
 // TODO LIST
-todoSubmit.addEventListener('click', createNewTodo);
-
+// todoSubmit.addEventListener('click', createNewTodo);
+form.addEventListener('submit', createNewTodo);
 // Fired on favorite button click (toggles important: property)
 todoContainer.addEventListener('click', markFavorite);
 
 // Fired when clicked on todo-description area (excluding favorite button)
-todoContainer.addEventListener('click', initiateRemoval);
+todoContainer.addEventListener('click', removeTodo);
 
 // NAVIGATION BUTTONS
 todoListBtn.addEventListener('click', renderTodo);

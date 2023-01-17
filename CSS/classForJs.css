@@ -1,3 +1,7 @@
+.removal-effect {
+  background-color: var(--color-removal--1);
+}
+
 .hidden {
   display: none;
 }
