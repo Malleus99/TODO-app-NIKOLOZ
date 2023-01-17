@@ -14,24 +14,20 @@ const importantBtn = document.querySelector('.important-TODO-list');
 
 let profileTodo = {
   username: 'Cooper Anderson',
-  todoList: [
-    {
-      todo: 'Fold laundry',
-      important: false,
-    },
-  ],
+  todoList: [],
 };
+
 let currentNavigationSpace;
 
 const updateLocalStorage = function () {
   localStorage.setItem('profileTodo', JSON.stringify(profileTodo));
 };
 
-const renderTodo = function () {
-  addTodoContainer.classList.remove('hidden');
-  const reverse = profileTodo.todoList.slice(0).reverse();
-  const todos = reverse.map(
-    inst => `
+// Used by renderTodo / renderFavorite functions
+const generateTodo = function (todo) {
+  const todoMarkup = todo
+    .map(
+      inst => `
   <div class="todo-instance">
     <div class="todo-description">${inst.todo}</div>
       <div class="btn-todo-initiation hidden">
@@ -39,14 +35,20 @@ const renderTodo = function () {
         <button class="btn-disregard btn-selector">✖</button>
       </div>
       <div class="todo-important-mark">
-        <svg class="svg-icon-favorite" viewBox="0 0 20 20">
+        <svg class="svg-icon-favorite" viewBox="0 0 24 24">
           ${inst.important ? SVG_PATH_FAV_YES : SVG_PATH_FAV_NO}
         </svg>
       </div>
   </div>`
-  );
-  const finalTodos = todos.join('');
-  todoContainer.innerHTML = finalTodos;
+    )
+    .join('');
+  return (todoContainer.innerHTML = todoMarkup);
+};
+
+const renderTodo = function () {
+  addTodoContainer.classList.remove('hidden');
+  const reverse = profileTodo.todoList.slice(0).reverse();
+  generateTodo(reverse);
   currentNavigationSpace = 'TODO-list';
   updateLocalStorage();
 };
@@ -57,25 +59,8 @@ const renderFavorite = function () {
   profileTodo.todoList.map(el => {
     if (el.important) favorites.push(el);
   });
-
   const reverse = favorites.slice(0).reverse();
-  const todos = reverse.map(
-    inst => `
-  <div class="todo-instance">
-    <div class="todo-description">${inst.todo}</div>
-      <div class="btn-todo-initiation hidden">
-          <button class="btn-delete btn-selector">✔</button>
-          <button class="btn-disregard btn-selector">✖</button>
-        </div>
-      <div class="todo-important-mark">
-        <svg class="svg-icon-favorite" viewBox="0 0 20 20">
-        ${inst.important ? SVG_PATH_FAV_YES : SVG_PATH_FAV_NO}
-        </svg>
-      </div>
-  </div>`
-  );
-  const finalTodos = todos.join('');
-  todoContainer.innerHTML = finalTodos;
+  generateTodo(reverse);
   currentNavigationSpace = 'Important';
   updateLocalStorage();
 };
@@ -113,7 +98,8 @@ const createNewTodo = function (e) {
 const markFavorite = function (e) {
   if (
     e.target.classList.contains('todo-important-mark') ||
-    e.target.classList.contains('svg-icon-favorite')
+    e.target.classList.contains('svg-icon-favorite') ||
+    e.target.classList.contains('svg-path')
   ) {
     const finder = e.target
       .closest('.todo-instance')
@@ -124,6 +110,7 @@ const markFavorite = function (e) {
   }
 };
 
+// Auxillary function for initiateRemoval function
 const resetTodoPanel = function () {
   const allTodoInstances = document.querySelectorAll('.todo-instance');
   allTodoInstances.forEach(el => el.classList.remove('removal-effect'));
@@ -131,6 +118,7 @@ const resetTodoPanel = function () {
   allBtnsActive.forEach(el => el.classList.add('hidden'));
 };
 
+// Auxillary function for initiateRemoval function
 const removeTodo = function (e) {
   const finder = e.target;
   const index = profileTodo.todoList.findIndex(el => el.todo === finder);
@@ -152,10 +140,7 @@ const initiateRemoval = function (e) {
 
     btnDelete.addEventListener('click', removeTodo);
 
-    btnDisregard.addEventListener('click', function () {
-      parentEl.classList.remove('removal-effect');
-      btnsContainer.classList.add('hidden');
-    });
+    btnDisregard.addEventListener('click', resetTodoPanel);
   }
 };
 
