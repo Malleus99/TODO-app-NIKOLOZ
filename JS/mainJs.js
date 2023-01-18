@@ -112,10 +112,12 @@ const markFavorite = function (e) {
 
 // Auxillary function for initiateRemoval function
 const resetTodoPanel = function () {
-  const allTodoInstances = document.querySelectorAll('.todo-instance');
-  allTodoInstances.forEach(el => el.classList.remove('removal-effect'));
-  const allBtnsActive = document.querySelectorAll('.btn-todo-initiation');
-  allBtnsActive.forEach(el => el.classList.add('hidden'));
+  document
+    .querySelectorAll('.todo-instance')
+    .forEach(el => el.classList.remove('removal-effect'));
+  document
+    .querySelectorAll('.btn-todo-initiation')
+    .forEach(el => el.classList.add('hidden'));
 };
 
 // Auxillary function for initiateRemoval function
